@@ -1,0 +1,9 @@
+library(xlsx)
+data = read.xlsx(file='./GasProg.xlsx',sheetIndex=1,rowIndex=2:7,colIndex=1:5,header=TRUE) #Doc trong vung A2:E7
+data$ExpiryDate = strptime(data$ExpiryDate, "%Y-%m-%d %H:%M:%S") #Chuyển đổi thời gian
+data$ReactivationDt = strptime(data$ReactivationDt, "%Y-%m-%d %H:%M:%S")
+library(XLConnect)
+workBook <- loadWorkbook('./GasProg.xlsx') #Nạp
+data = readWorksheet(workBook,sheet=1,region='A2:E7') #Đọc
+writeWorksheetToFile(data=data,sheet="a",file='./new.xlsx') #Ghi
+savehistory("C:/Users/anh/Downloads/DSCoursera/cleaningData/code/data.excel.the.lenh.r.txt")

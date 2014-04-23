@@ -1,0 +1,86 @@
+library(XML)
+doc  <- xmlTreeParse('./DataRestaurant.xml',useInternalNodes=TRUE) #Đọc
+rootNode  <- xmlRoot(doc) #Chọn gốc
+xmlName(rootNode) #Chọn tên của thẻ
+xmlAncestors(rootNode)#Chọn cha của thẻ
+#?xmlAncestors
+xmlAttrs(rootNode) #Chọn thuộc tính của thẻ
+xmlChildren(rootNode) # Chọn tag con của thẻ
+#xmlName(rootNode)
+# rootNode[1]
+# rootNode[[1]
+# ]
+# rootNode[[[1]]]
+# rootNode[1][1]
+# rootNode[1][1][1]
+# rootNode[[1]
+# rootNode[[1]]
+# rootNode[[1]]
+# rootNode[[1]][1]
+# rootNode[[1]][2]
+# rootNode[[1]][1];
+# rootNode[[1]][2];
+# rootNode[[1]][[1]]
+# rootNode[[1]][[2]]
+# rootNode[[1]][[2]];
+# rootNode[[1]][[2]][1]
+# rootNode[[1]][[2]]['name']
+# rootNode[[1]][[2]][['name']]
+# rootNode[[1]][[2]][[['name']]]
+# rootNode[[1]][[2]][['name']];
+# xmlValue(rootNode[[1]][[2]][['name']]);
+xpathApply(rootNode,"/response/row/row/child::*[@human_address]/@human_address") # Dùng XPath chọn thuộc tính human_address
+# xpathApply(rootNode,"/response/row/row/child::*[@human_address]/@human_address",xmlValue)
+# xpathApply(rootNode,"/response/row/row/child::*[@human_address]/@human_address",xmlName)
+# xpathApply(rootNode,"/response/row/row/child::*[@human_address]/@human_address")
+# human_address <- xpathApply(rootNode,"/response/row/row/child::*[@human_address]/@human_address",xmlName)
+# human_address <- xpathApply(rootNode,"/response/row/row/child::*[@human_address]/@human_address");
+# human_address[1]
+# human_address[[1]]
+# human_address[[1]][1]
+# human_address[1]
+# human_address[[1]]
+# human_address[[1]][1]
+# human_address[[1]][1];
+# human_address <- xpathApply(rootNode,"/response/row/row/child::*[@human_address]/@human_address/text()",xmlName)
+# human_address <- xpathApply(rootNode,"/response/row/row/child::*[@human_address]/@human_address/text()",xmlName)
+# human_address
+# human_address <- xpathApply(rootNode,"/response/row/row/child::*[@human_address]/@human_address/text()")
+# human_address
+# xmlGetAttr(human_address,name='human_address')
+# xmlGetAttr(rootNode,name='human_address')
+human_address <- xpathApply(rootNode,"/response/row/row/child::*[@human_address]")
+# xmlGetAttr(human_address,name='human_address')
+# row <- xpathApply(rootNode,"/response/row/row/child::*[@human_address]")
+# row
+# human_address <- xpathApply(rootNode,"/response/row/row/localtion_1]")
+# human_address <- xpathApply(rootNode,"/response/row/row/localtion_1")
+# xmlGetAttr(human_address,name='human_address')
+# xmlGetAttr(human_address,name='human_address')
+# human_address
+# human_address <- xpathApply(rootNode,"/response/row/row/location_1")
+# human_address
+# xmlGetAttr(human_address,name='human_address')
+sapply(human_address,xmlGetAttr,name='human_address')
+# sapply(human_address,xmlGetAttr)
+# sapply(human_address,xmlGetAttr,name='human_address')
+# ?sapply
+human_address <- xpathApply(rootNode,"/response/row/row/child::*[@human_address]/@human_address")
+# sapply(human_address,xmlGetAttr,name='human_address')
+sapply(human_address,function(x){x[[1]][1]})
+restaurantWithzipCodeEqual21206 = xpathSApply(doc=rootNode,path="//row/zipcode[text()=21206]/parent::*")
+# restaurantWithzipCodeEqual21206
+class(restaurantWithzipCodeEqual21206)
+xpathSApply(restaurantWithzipCodeEqual21206,path="zipcode")
+# sapply(xpathSApply,restaurantWithzipCodeEqual21206,path="zipcode")
+# sapply(restaurantWithzipCodeEqual21206,xpathSApply,path="zipcode")
+# sapply(restaurantWithzipCodeEqual21206,xpathSApply,path="zipcode/value()")
+sapply(restaurantWithzipCodeEqual21206,xpathSApply,path="zipcode/text()")
+# time(sapply(restaurantWithzipCodeEqual21206,xpathSApply,path="zipcode/text()"))
+# system.time(sapply(restaurantWithzipCodeEqual21206,xpathSApply,path="zipcode/text()"))
+# system.time(sapply(restaurantWithzipCodeEqual21206,xpathSApply,path="zipcode/text()"))
+install.packages("microbenchmark")
+# (sapply(restaurantWithzipCodeEqual21206,xpathSApply,path="zipcode/text()"))
+library(microbenchmark)
+microbenchmark(sapply(restaurantWithzipCodeEqual21206,xpathSApply,path="zipcode/text()"))
+# savehistory("C:/Users/anh/Downloads/DSCoursera/cleaningData/code/data.xml.thu.lenh.r.txt")
